@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+
+	<script>
+
+		var combinationSum2 = function (candidates, target) {
+			let result = []
+			var dfs = (arr, target, idx) => {
+				if (idx === candidates.length) {
+					return;
+				}
+				if (target === 0) {
+					result.push(arr)
+					return
+				}
+				dfs(arr, target, idx + 1)
+				if (target - candidates[idx] >= 0) {
+					dfs([...arr, candidates[idx]], target - candidates[idx], idx)
+				}
+			}
+			dfs([], target, 0)
+			return result
+		};
+		// console.log(combinationSum2([2, 3, 6, 7], 7))
+
+
+
+		// 给定一个二叉树，在树的最后一行找到最左边的值。
+		// var findBottomLeftValue = function (root) {
+		// 	let result = {}
+		// 	let num = 0
+		// 	let target = root
+		// 	let targetNum = 0
+		// 	while (target) {
+		// 		if (target.right) {
+		// 			root = target.right
+		// 			targetNum = num
+		// 		}
+		// 		if (target.left) {
+		// 			num++;
+		// 			target = target.left
+		// 		}
+		// 		if (!target.left) {
+		// 			result[num] = target.val;
+		// 			num = targetNum;
+		// 			target = root;
+		// 			root = null
+		// 			continue
+		// 		}
+
+		// 	}
+		// 	const arr = Object.keys(result)
+		// 	const max = arr.reduce((pre, cur) => {
+		// 		return pre = Math.max(pre, cur)
+		// 	}, arr[0])
+		// 	return result[max]
+		// };
+		// console.log(findBottomLeftValue({
+		// 	val: 3,
+		// 	left: {
+		// 		val: 1,
+		// 		left: {
+		// 			val: 4
+		// 		}
+		// 	},
+		// 	right: {
+		// 		val: 5,
+		// 		left: {
+		// 			val: 5,
+		// 			left: {
+		// 				val: 7
+		// 			}
+		// 		},
+		// 		right: {
+		// 			val: 6
+		// 		}
+		// 	}
+		// }))
+
+		// 		给定一个可包含重复数字的序列，返回所有不重复的全排列。
+
+		// 示例:
+
+		// 输入: [1,1,2]
+		// 输出:
+		// [
+		//   [1,1,2],
+		//   [1,2,1],
+		//   [2,1,1]
+		// ]
+		function funs(arr) {
+			let result = []
+			const backtrack = (hava, idx) => {
+				if (idx === arr.length) {
+					result.push(hava)
+					return
+				}
+				for (let i = 0; i < arr.length; i++) {
+					hava.push(arr[i])
+					backtrack(hava, i + 1)
+				}
+			}
+			backtrack([], 0)
+		}
+		console.log(funs([1, 1, 2]))
+	</script>
+</body>
+
+
+</html>

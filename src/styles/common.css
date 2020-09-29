@@ -1,0 +1,21 @@
+.container {
+  width:700px;
+  margin:0 auto;
+}
+.markdown {
+  
+  font-size: 16px;
+}
+pre {
+  background: #f6f8fa;
+  width: 100%;
+  line-height: 1.5;
+  padding:15px;
+  overflow: auto;
+  
+  
+}
+pre code {
+  font-size: 14px;
+  font-family: 'MingLiU',Microsoft YaHei,sans-serif;
+}
