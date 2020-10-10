@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Layout from "../components/layout"
+// import Layout from "../components/layout"
 import { markdown } from 'markdown'
 // var markdown = require("markdown").markdown;
 console.log(markdown.toHTML("Hello *World*!"));
