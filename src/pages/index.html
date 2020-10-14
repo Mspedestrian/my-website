@@ -110,7 +110,35 @@
 			}
 			backtrack([], 0)
 		}
-		console.log(funs([1, 1, 2]))
+		// console.log(funs([1, 1, 2]))
+
+
+
+
+		// 给你一棵所有节点为非负值的二叉搜索树，请你计算树中任意两节点的差的绝对值的最小值。
+		var getMinimumDifference = function (root) {
+			// 对数进行前序遍历读到数组中，依次计算相邻的数之间的差
+
+			let arr = []
+			const showTree = (tree) => {
+				if (tree.left) {
+					showTree(tree.left)
+				}
+				arr.push(tree.val)
+				if (tree.right) {
+					showTree(tree.right)
+				}
+			}
+			showTree(root)
+			if (arr < 2) return arr[0]
+			let min = arr[1] - arr[0]
+			for (let i = 1; i < arr.length; i++) {
+				const ss = arr[i] - arr[i - 1]
+				min = Math.min(min, ss)
+			}
+			return min
+		};
+
 	</script>
 </body>
 
