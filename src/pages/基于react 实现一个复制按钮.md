@@ -4,6 +4,9 @@ date: "2020-09-28"
 ---
 
 ```
+
+<!-- 可参考已经实现的库http://www.clipboardjs.cn/ -->
+<!-- https://github.com/zenorocha/clipboard.js/blob/master/src/clipboard.js -->
 import React, { Component, } from 'react'
 
 import { Button, message } from 'antd'
@@ -30,6 +33,7 @@ export default class CopyButton extends Component {
       })
       setTimeout(() => {
         this.myRef.current.select();
+        <!-- https://developer.mozilla.org/zh-CN/docs/Web/API/Document/execCommand -->
         document.execCommand("Copy");
         !this.props.noMessage && message.success('复制成功')
       })
