@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 给定长度分别为 m 和 n 的两个数组，其元素由 0-9 构成，表示两个自然数各位上的数字。现在从这两个数组中选出 k (k <= m + n) 个数字拼接成一个新的数，要求从同一个数组中取出的数字保持其在原数组中的相对顺序。
+
+    // var maxNumber = function (nums1, nums2, k) {
+
+
+
+    // };
+
+    // console.log(maxNumber([6, 7],
+    //   [6, 0, 4],
+    //   5))
+
+
+    // var lemonadeChange = function (bills) {
+    //   let yu = 0, yu5 = 0, yu10 = 0, yu20 = 0
+    //   for (let i = 0; i < bills[i]; i++) {
+    //     switch (bills[i]) {
+    //       case 5: yu5++; break;
+    //       case 10: {
+    //         if (yu5 <= 0) return false
+    //         else {
+    //           yu5--;
+    //           yu10++
+    //         }
+    //         break
+    //       };
+    //       case 20: {
+    //         if (yu5 <= 0) return false
+    //         if (yu10 > 0) {
+    //           yu10--;
+    //           yu5--
+    //         } else if (yu5 >= 3) {
+    //           yu5 = yu5 - 3
+    //         } else return false
+    //         break
+    //       }
+    //     }
+    //   }
+    //   return true
+    // };
+    // console.log(lemonadeChange([5, 5, 5, 10, 5, 5, 10, 20, 20, 20]))
+
+
+
+    var predictPartyVictory = function (senate) {
+
+
+
+      let oldArr = [...senate]
+      let result = null
+      while (true) {
+        let isr = isAll(oldArr)
+        if (isr) {
+          result = isr
+          break
+        }
+        let newArr = []
+        let deleteD = 0, deleteR = 0
+
+        for (let i = 0; i < oldArr.length; i++) {
+          if (oldArr[i] === 'D') {
+            if (deleteD > 0) {
+              deleteD--;
+              continue
+            } else {
+              deleteR++;
+              newArr.push('D')
+            }
+          } else if (oldArr[i] === 'R') {
+            if (deleteR > 0) {
+              deleteR--;
+              continue
+            } else {
+              deleteD++;
+              newArr.push('R')
+            }
+          }
+        }
+        oldArr = []
+        for (let i = 0; i < newArr.length; i++) {
+          if (deleteD > 0 && newArr[i] === 'D') {
+            deleteD--;
+            continue
+          }
+          if (deleteD === 0 && newArr[i] === 'D') {
+            oldArr.push('D')
+          }
+
+          if (deleteR > 0 && newArr[i] === 'R') {
+            deleteR--;
+            continue
+          }
+          if (deleteR === 0 && newArr[i] === 'R') {
+            oldArr.push('R')
+          }
+        }
+
+      }
+      return result === 'D' ? 'Dire' : 'Radiant'
+    };
+
+
+    function isAll(arr) {
+      let kk = arr[0]
+      const isNo = arr.some(item => {
+        return item !== kk
+      })
+      if (isNo) {
+        return false
+      } else {
+        return kk
+      }
+    }
+
+    var minCostClimbingStairs = function (cost) {
+
+      const getfun = (i, cost) => {
+        if (i <= 2) return cost[i]
+        const last = getfun(i - 1, cost)
+        const lastj = getfun(i - 2, cost)
+        const k = last < lastj ? last : lastj
+        return k + cost[i]
+      }
+      const l = cost.length
+      const [first, ...rest] = cost
+      const result0 = getfun(l - 1, cost)
+      const result1 = getfun(l - 2, rest)
+      return result0 < result1 ? result0 : result1
+    };
+
+    console.log(minCostClimbingStairs([0, 1, 2, 2]))
+
+
+
+
+
+  </script>
+</body>
+
+</html>

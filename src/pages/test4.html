@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+
+    //  实现一个函数
+    //  add(1)  1
+    //  add(1,2) 3
+    //  add(1)(2)(3)  6
+
+    //  变体
+    //  add(1).sumOf()  1
+    //  add(1,2).sumOf() 3
+    //  add(1)(2)(3).sumOf()  6
+
+    // function add() {
+    //   const slice = [].slice
+    //   let params = slice.apply(arguments)
+    //   let keru = function () {
+    //     let arr = slice.apply(arguments)
+    //     params = params.concat(arr)
+    //     return keru
+    //   }
+    //   keru.toString = function () {
+    //     return params.reduce((pre, cur) => {
+    //       return pre += cur
+    //     }, 0)
+    //   }
+    //   return keru
+    // }
+    // console.log(add(1), add(1, 2), add(1)(2)(3))
+
+
+    // 无法实现tostring方法
+    // let res = 0
+    // let params = []
+    // function add() {
+    //   const slice = [].slice
+    //   const arg = slice.apply(arguments)
+    //   params = params.concat(arg)
+    //   let sum = params.reduce((pre, cur) => {
+    //     return pre += cur
+    //   }, 0)
+    //   res += sum
+    //   return add
+    // }
+    // add.toString = function () {
+    //   return res
+    // }
+    // console.log(add(1), add(1, 2), add(1)(2)(3))
+
+
+
+
+    // 准确对两个小数求乘法值
+    // function cheng(a1, a2) {
+    //   let l1 = String(a1).split('.')[1].length
+    //   let l2 = String(a2).split('.')[1].length
+    //   a1 = a1 * Math.pow(10, l1)
+    //   a2 = a2 * Math.pow(10, l2)
+    //   return (a1 * a2 / Math.pow(10, l1 + l2)).toFixed(l1 + l2)
+    // }
+    // console.log(cheng(0.206, 0.406))
+
+    // 实现bind函数
+    // Function.prototype.mybind = function (context) {
+    //   let vm = this
+    //   let slice = [].slice.apply(arguments)
+    //   return function () {
+    //     let params = slice.concat([].slice.apply(arguments))
+    //     return vm.apply(context, arguments)
+    //   }
+    // }
+
+    // var obj = { a: 1 }
+    // function fun() { console.log(this.a) }
+    // var fun1 = fun.mybind(obj)
+    // fun1()
+
+    // new 函数
+    // function fun(){
+    //   var obj = {}
+    //   obj.__proto__=fun.prototype
+    //   fun.apply(obj,arguments)
+    //   return obj
+    // }
+
+    // 实现instanceof
+    // function myinstanceof(obj,fun){
+    //   if(obj.__proto__==fun.prototype){
+    //     return true
+    //   }
+    // }
+
+
+
+    // 分割线
+    // 实现promise 
+    // 链式调用,then 穿透
+
+
+    // function MyPromise(fun) {
+    //   this.state = 'pending'
+    //   this.data = null
+    //   this.error = null
+    //   this.successFun = [Function.prototype]
+    //   this.failFun = [Function.prototype]
+    //   var vm = this
+    //   const resolveFun = function (data) {
+    //     if (data && data.then) {
+    //       data.then((data1) => resolveFun(data1))
+    //     }
+    //     // console.log(data)
+    //     setTimeout(() => {
+
+    //       if (vm.state != 'pending') {
+    //         return
+    //       }
+    //       vm.state = 'resolve'
+    //       vm.data = data
+    //       vm.successFun.forEach((func) => {
+    //         func(data)
+    //       })
+    //     })
+    //   }
+    //   const rejectFun = function (data) {
+    //     setTimeout(() => {
+    //       if (vm.state != 'pending') {
+    //         return
+    //       }
+    //       vm.state = 'reject'
+    //       vm.error = data
+    //       vm.failFun.forEach((func) => {
+    //         func(data)
+    //       })
+    //     })
+    //   }
+    //   try {
+    //     fun(resolveFun, rejectFun)
+    //   } catch (e) {
+    //     rejectFun(e)
+    //   }
+
+    // }
+
+
+    // function resultResolve(promise, result, resolve, reject) {
+    //   if (result == promise) {
+    //     throw Error('循环调用')
+    //   }
+    //   let consume = false
+
+    //   if (typeof result !== 'function' && typeof result !== 'object') {
+    //     if (consume) {
+    //       return
+    //     }
+    //     resolve(result)
+    //     consume = true
+    //   } else {
+    //     let thenable = result.then
+    //     if (thenable) {
+    //       result.then((data) => {
+    //         if (consume) {
+    //           return
+    //         }
+    //         consume = true
+    //         return resultResolve(promise, data, resolve, reject)
+    //       }, (e) => {
+    //         if (consume) {
+    //           return
+    //         }
+    //         consume = true
+    //         reject(e)
+    //       })
+    //     } else {
+    //       if (consume) {
+    //         return
+    //       }
+    //       consume = true
+    //       resolve(result)
+    //     }
+    //   }
+    // }
+    // MyPromise.prototype.then = function (fun1, fun2) {
+    //   // 实现then 穿透，如果传值不是函数，则传递到下一个then
+    //   fun1 = typeof (fun1) == 'function' ? fun1 : data => data
+    //   fun2 = typeof (fun2) == 'function' ? fun2 : () => { throw new Error('error') }
+    //   let promise2
+    //   if (this.state == 'pending') {
+    //     promise2 = new MyPromise((resolve, reject) => {
+    //       setTimeout(() => {
+    //         this.successFun.push(() => {
+    //           let result = fun1(this.data)
+    //           resultResolve(promise2, result, resolve, reject)
+    //           // resolve(result)
+    //         })
+    //         this.failFun.push(() => {
+    //           let result = fun2(this.error)
+    //           resultResolve(promise2, result, resolve, reject)
+    //           // reject(result)
+    //         })
+    //       })
+    //     })
+    //   } else if (this.state == 'resolve') {
+    //     promise2 = new MyPromise((resolve, reject) => {
+    //       setTimeout(() => {
+    //         try {
+    //           const fun1data = fun1(this.data)
+    //           resultResolve(promise2, result, resolve, reject)
+    //           // resolve(fun1data)
+    //         } catch (e) {
+    //           resultResolve(promise2, result, resolve, reject)
+    //           // reject(e)
+    //         }
+    //       })
+    //     })
+
+    //   } else if (this.state == 'reject') {
+    //     promise2 = new MyPromise((resolve, reject) => {
+    //       setTimeout(() => {
+    //         try {
+    //           const fun2data = fun2(this.data)
+    //           resultResolve(promise2, result, resolve, reject)
+    //           // resolve(fun2data)
+    //         } catch (e) {
+    //           resultResolve(promise2, result, resolve, reject)
+    //           // reject(e)
+    //         }
+    //       })
+    //     })
+
+    //   }
+    //   return promise2
+    // }
+
+    // var promise = new MyPromise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve('pppp')
+    //   }, 1000)
+    // })
+    // promise.then((data) => {
+    //   console.log(data, 'data1')
+    //   return new MyPromise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       resolve('10000')
+    //       return new MyPromise((resolve, reject) => {
+    //         setTimeout(() => {
+    //           resolve('9999')
+    //         }, 1000)
+    //       })
+    //     })
+    //   })
+    // }).then((data) => {
+    //   console.log(data, '33333')
+
+    //   return new MyPromise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       resolve('77777')
+    //     }, 1000)
+    //   })
+    // }).then((data) => {
+    //   console.log(data, 'llll')
+    // }).then((data) => {
+    //   console.log(data, '00000')
+    // })
+    // promise.then((data) => {
+    //   console.log(data, 'data444')
+    // })
+    // console.log('00000')
+
+
+
+
+    // 1 this 的几种情况
+    //  全局情况下，普通模式指向window，严格模式为undefined
+    //  new 调用：指向新生成的实例对象
+    //  箭头函数：指向创建时候的上下文this
+    //  call，bind，apply，显示绑定
+    //  对象调用：指向调用的对象
+
+    //  概括：指向引擎的当前执行上下文
+    // const 定义的变量不会默认绑定到全局window的this上去
+    // bind 函数实现(没有考虑new 调用)
+
+    // Function.prototype.myBind = function (context) {
+    //   const arr = [].slice.call(arguments, 1)
+    //   return () => {
+    //     const argu = arr.concat([].slice.call(arguments, 1))
+    //     this.apply(context, argu)
+    //   }
+    // }
+
+    // bind函数考虑new 调用
+    // Function.prototype.myBind = function (context) {
+    //   const arr = [].slice.call(arguments, 1)
+    //   let thisfun = this
+    //   return function () {
+    //     const argu = arr.concat([].slice.call(arguments))
+
+    //     var bound = function () {
+    //       var fun = this instanceof F ? this : context || this
+    //       return thisfun.apply(fun, argu)
+    //     }
+    //     function F() { }
+    //     F.prototype = bound.prototype
+    //     return bound()
+    //   }
+    // }
+
+
+    // Function.prototype.myBind = function (context) {
+    //   const arr = [].slice.call(arguments, 1)
+    //   let thisfun = this
+    //   function F() { }
+    //   F.prototype = thisfun.__proto__
+    //   var bound = function () {
+    //     const argu = arr.concat([].slice.call(arguments))
+    //     const thiscontext = this instanceof F ? this : context || this
+
+    //     return thisfun.apply(thiscontext, argu)
+    //   }
+    //   bound.prototype = new F()
+    //   return bound
+    // }
+
+    // var sli = Array.prototype.slice.myBind([1, 2, 3])
+    // console.log(sli(2))
+
+    // function Person() {
+    //   this.name = 'name'
+    //   this.age = '13'
+    // }
+    // let obj = {
+    //   // name: '444',
+    //   // age: "kkkk"
+    // }
+    // var fun = Person.bind(obj)
+    // console.log(fun(), obj)
+
+
+
+    // 2,闭包，执行上下文
+    // 变量提升：
+    // 预编译阶段
+    // 执行阶段
+    // 变量声明在预编译阶段
+    // 内存泄露
+    // 排查方法：
+    // chrome  performance memory
+
+    // 3，数组API
+
+    // 实现offset
+    //  reduce 方法应用 1，实现promise队列
+
+    // let arr = [new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     console.log(1)
+    //   }, 1000)
+    // }), new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     console.log(2)
+    //   }, 2000)
+    // }), new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     console.log(3)
+    //   }, 1000)
+    // })]
+    // function promiseQueen(arr) {
+    //   arr.reduce((pre, cur) => {
+    //     return pre.then(() => { return cur })
+    //   }, Promise.resolve())
+    // }
+    // promiseQueen(arr)  ???不异步，同时开始执行
+
+    // 实现pipe
+    // var arr = [fun1, fun2, fun3]
+    // var pipefun = (arr) => (initvalue) => {
+    //   return arr.reduce((pre, cur) => {
+    //     return pre = cur(pre)
+    //   }, initvalue)
+    // }
+    // function dd(a) {
+    //   return ++a
+    // }
+    // // dd(dd(dd(1)))
+    // console.log(pipefun([dd, dd, dd])(1))
+
+    // reduce 实现
+    // reduce 参数：两个，
+    // 函数参数：接收四个参数  pre cur，currentIndex，?
+    // 初始值：初始值没传的时候为数组第一项
+
+    // Array.prototype.myreduce = function (fun, initValue) {
+    //   let arr = [...this]
+    //   let currentIndex = typeof initValue == 'undefined' ? 1 : 0
+    //   initValue = typeof initValue == 'undefined' ? arr[0] : initValue
+
+    //   let result = initValue
+    //   arr.slice(currentIndex).forEach((item, index) => {
+    //     currentIndex += index
+    //     result = fun(result, item, currentIndex)
+    //   })
+    //   return result
+    // }
+    // console.log([1, 2, 3].myreduce((pre, cur) => {
+    //   return pre += cur
+    // }))
+    // compose 函数   见pipe  loash  redux ？？
+
+    // 实现apply
+
+    // Function.prototype.myapply = function (context, args) {
+    //   // let arg = [].slice.call(arguments, 1)
+    //   context = typeof context == 'undefined' ? window : context
+    //   args = typeof args == 'undefined' ? [] : args
+    //   const targetEn = Symbol('targetEn')
+    //   context[targetEn] = this
+    //   let result = context[targetEn](...args)
+    //   delete targetEn
+    //   return result
+    // }
+    // function Person() {
+    //   console.log(this.name)
+    //   return 'kkk'
+    // }
+    // console.log(Person.myapply({ name: "llll" }))
+    // 数据类型
+    // number string null undefined symbol object function       array 
+    // 类型判断：typeof instanceof  constructor.name
+    // typeof 1    'number'
+    // typeof 'string'     'string'
+    // typeof null   'object'
+    // typeof undefined   'undefined'
+    // typeof ()=>{}   'function'
+    // typeof Symbol 'symbol'
+
+    // typeof [] 'object'
+    // typeof NaN  'number'
+
+
+    // 实现instanceof
+
+    // function instance(obj, fun) {
+    //   if (typeof obj !== 'object') return false
+    //   if (obj.__proto__ == fun.prototype) {
+    //     return true
+    //   } else if (obj.__proto__ == Object.prototype) {
+    //     return false
+    //   } else {
+    //     return instance(obj.__proto__, fun)
+    //   }
+    // }
+
+
+    // function instance(obj, fun) {
+    //   if (typeof obj !== 'object') return false
+    //   while (obj) {
+    //     if (obj.__proto__ == fun.prototype) {
+    //       return true
+    //     }
+    //     if (obj.__proto__ == Object.prototype) {
+    //       return false
+    //     }
+    //     obj = obj.__proto__
+    //   }
+    //   return false
+
+    // }
+    // console.log(instance([1, 2], String))
+
+    // 隐式类型转换  []=![]    function  valueof tostring   判断需要字符串，调用tostirng  数字：valueof
+    // tostring  valutof相关？？？
+
+
+    // 5，异步流程
+
+    // 实现左移，上移，左移
+
+    // var top1 = 0, left1 = 0
+    // function move(flag, meter, time, callback = Function.prototype) {
+    //   setTimeout(() => {
+    //     if (flag) {
+    //       top1 += meter
+    //     } else {
+    //       left1 += meter
+    //     }
+    //     console.log(top1, left1)
+    //     callback()
+    //   }, time)
+    // }
+    // move(true, 1, 1000, () => {
+    //   move(false, 9, 100, () => {
+    //     move(true, 10, 3000)
+    //   })
+    // })
+
+    // var top1 = 0, left1 = 0
+    // function move(flag, meter, time) {
+    //   return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       if (flag) {
+    //         top1 += meter
+    //       } else {
+    //         left1 += meter
+    //       }
+    //       console.log(top1, left1)
+    //       resolve()
+    //     }, time)
+    //   })
+
+    // }
+    // move(true, 1, 1000)
+    //   .then(() => {
+    //     move(true, 9, 2000)
+    //   })
+    //   .then(() => {
+    //     move(true, 10, 1000)
+    //   })
+
+
+    // var top1 = 0, left1 = 0
+    // function* move(flag, meter, time) {
+    //   setTimeout(() => {
+    //     if (flag) {
+    //       top1 += meter
+    //     } else {
+    //       left1 += meter
+    //     }
+    //     console.log(top1, left1)
+    //     // yield
+    //   }, time)
+
+    // }
+    // move(true, 1, 1000).next()
+    // move(false, 9, 100).next()
+    // move(true, 10, 3000).next()
+
+    // var top1 = 0, left1 = 0
+    // function move(flag, meter, time) {
+    //   return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       if (flag) {
+    //         top1 += meter
+    //       } else {
+    //         left1 += meter
+    //       }
+    //       console.log(top1, left1)
+    //       resolve()
+    //     }, time)
+    //   })
+    // }
+    // async function fun1() {
+    //   await move(true, 1, 1000)
+    //   await move(true, 9, 3000)
+    //   await move(true, 10, 2000)
+    // }
+    // fun1()
+
+    // 红绿灯控制
+    // 红灯1s 亮一次    黄灯3s  绿灯  2s
+    function red() {
+      console.log('red')
+    }
+    function yellow() {
+      console.log('yellow')
+    }
+    function green() {
+      console.log('green')
+    }
+
+    function task(fun, time) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          fun()
+          resolve()
+        }, time)
+      })
+    }
+    // task(red, 1000).then(() => {
+    //   task(yellow, 3000).then(() => {
+    //     task(green, 2000)
+    //   })
+    // })
+
+    // reduce 实现方式不异步？
+    // ['red', 'yellow', 'green'].reduce((pre, cur) => {
+    //   switch (cur) {
+    //     case 'red': {
+    //       return pre = pre.then(() => {
+    //         task(red, 1000)
+    //       })
+    //     }
+    //     case 'yellow': {
+    //       return pre = pre.then(() => {
+    //         task(yellow, 3000)
+    //       })
+    //     }
+    //     case 'green': {
+    //       return pre = pre.then(() => {
+    //         task(green, 2000)
+    //       })
+    //     }
+    //   }
+    //   return pre = cur.then(cur)
+    // }, Promise.resolve())
+
+
+    // 实现图片预加载
+
+    // 给定url数组依次加载图片
+
+
+
+
+    // function loadUrls(urls) {
+    //   let result = []
+    //   let l = urls.length
+    //   urls = [...urls, '']
+    //   return new Promise((resolve, reject) => {
+    //     urls.slice(1).reduce((pre, cur) => {
+    //       return pre.then((data) => {
+    //         result.push(data)
+    //         if (cur) {
+    //           return loadImg(cur)
+    //         } else {
+    //           return resolve(result)
+    //         }
+    //       })
+    //     }, loadImg(urls[0]))
+
+    //   })
+    // }
+
+    // // 一次性全部加载  promise all
+    // function loadUrlsOnce(urls) {
+    //   let result = [], l = urls.length
+    //   return new Promise((resolve, reject) => {
+    //     urls.forEach((url) => {
+    //       loadImg(url).then(data => {
+    //         result.push(data)
+    //         if (result.length == l) {
+    //           resolve(result)
+    //         }
+    //       }, (e) => {
+    //         l--
+    //       })
+    //     })
+    //   })
+
+    // }
+
+
+
+    // loadUrlsOnce(urls).then(data => {
+    //   console.log(data, 'once')
+    // })
+    // Promise.all(urls.map(url => loadImg(url))).then(data => {
+    //   console.log(data, 'all')
+    // })
+    // loadUrls(urls).then((data) => {
+    //   console.log(data)
+    // })
+
+
+    // 控制带宽，不超过3个
+
+    const urls = [
+      'https://pics7.baidu.com/feed/a8773912b31bb051fb37de05c78e64b24bede083.jpeg?token=f02d22e51399a01c6c239e6247cec44f',
+      'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2F50%2Fv2-e73ebe5fb7fbae39d69ed94dcc82f145_hd.jpg&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620457757&t=2a675564e5af2aeab361feca8b901c12',
+      'https://pics6.baidu.com/feed/a08b87d6277f9e2f726b0e3db2882622b999f3ec.jpeg?token=8da340017c308f0d70971953991c9ef9',
+      'https://th.bing.com/th/id/R65398d6ad86129f9628c0ad80da4040c?rik=C3qNS9mZOQk%2b5A&riu=http%3a%2f%2fwww.shijuepi.com%2fuploads%2fallimg%2f200918%2f1-20091Q10420.jpg&ehk=QBNuJIbVP1qo%2bwUD3YzXcvL4H5iHivOHXUnzzRw%2bWfU%3d&risl=&pid=ImgRaw',
+      'https://t7.baidu.com/it/u=1951548898,3927145&fm=193&f=GIF',
+      'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3351113425,3755484207&fm=26&gp=0.jpg',
+      'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201411%2F01%2F20141101171342_xHRH2.jpeg&refer=http%3A%2F%2Fcdn.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1620530246&t=92a7ed89923c6176bc173f4a27f3df8d',
+
+
+    ]
+
+
+
+    function loadImg(url) {
+      return new Promise((resolve, reject) => {
+        var img = new Image()
+        img.src = url
+        img.onload = () => {
+          resolve(url)
+
+        }
+        img.onerror = function (err) {
+          reject(err)
+        }
+      })
+    }
+    // 顺序加载
+    // urls.reduce((pre, url) =>
+    //   pre.then(() => loadImg(url)), Promise.resolve()
+    // ).then(data => {
+    //   console.log(data)
+    // }, error => {
+    //   console.log(error, 'err')
+    // })
+
+    // 限制带宽
+    // function loadImgLimit(urls, nums) {
+    //   let l = urls.length
+    //   if (l <= nums) {
+    //     return Promise.all(urls.map(url => loadImg(url)))
+    //   }
+    //   let sliceUrls = urls.splice(0, nums)
+    //   let slicePromiseArray = sliceUrls.map(url => loadImg(url))
+    //   let result = []
+    //   return new Promise((resolve, reject) => {
+    //     urls.reduce((pre, cur) => {
+    //       return pre.then((id) => {
+    //         result.push(id)
+    //         let index = sliceUrls.indexOf(id)
+    //         sliceUrls.splice(index, 1)
+    //         slicePromiseArray.splice(index, 1)
+    //         sliceUrls.push(cur)
+    //         slicePromiseArray.push(loadImg(cur))
+    //         return Promise.race(slicePromiseArray)
+    //       })
+
+    //     }, Promise.race(slicePromiseArray)).then((data) => {
+    //       Promise.all(slicePromiseArray).then(data => {
+    //         result = result.concat(data)
+    //         resolve(result)
+    //       })
+    //     })
+    //   })
+    // }
+
+    // loadImgLimit(urls, 2).then(data => {
+    //   console.log(data)
+    // })
+
+    // 限制纯promise带宽  ???
+    // function promiseLimit(promiseArray, nums) {
+    //   let l = urls.length
+    //   if (l <= nums) {
+    //     return Promise.all(promiseArray)
+    //   }
+    //   let slicePromiseArray = promiseArray.splice(0, nums)
+    //   let result = []
+    //   return new Promise((resolve, reject) => {
+    //     slicePromiseArray.reduce((pre, cur) => {
+    //       return pre.then((id) => {
+    //         result.push(id)
+    //         let index = slicePromiseArray.indexOf(id)  // 需要根据具体业务
+    //         slicePromiseArray.splice(index, 1)
+    //         slicePromiseArray.push(loadImg(cur))
+    //         return Promise.race(slicePromiseArray)
+    //       })
+
+    //     }, Promise.race(slicePromiseArray)).then((data) => {
+    //       Promise.all(slicePromiseArray).then(data => {
+    //         result = result.concat(data)
+    //         resolve(result)
+    //       })
+    //     })
+    //   })
+    // }
+
+
+    // 类型判断 cannnot undefined
+    var user = {
+      name: 'ss',
+      age: '',
+      class: {
+        class1: {
+          class2: {
+            calss3: ''
+          }
+        }
+      }
+    }
+    // user.class.class1.class2.class3
+    // function getZhi(obj, arr) {
+    //   if (!(arr instanceof Array)) {
+    //     arr = arr.split('.')
+    //   }
+    //   let result
+    //   arr.reduce((pre, cur) => {
+    //     if (typeof pre !== 'object' || !pre) {
+    //       pre = {}
+    //     }
+    //     return pre[cur]
+    //   }, obj)
+    // }
+    // 实现Promise all
+    // Promise.myAll = function (promiseArr) {
+    //   let result = [], l = promiseArr.length
+    //   return new Promise((resolve, reject) => {
+    //     promiseArr.forEach(promise => {
+    //       promise.then((data) => {
+    //         result.push(data)
+    //         if (result.length == l) {
+    //           resolve(result)
+    //         }
+    //       }, (error) => {
+    //         reject(error)
+    //       })
+    //     })
+    //   })
+    // }
+    // 实现Promise race
+    // Promise.myRace = function (promise) {
+    //   return new Promise((resolve, reject) => {
+    //     promiseArr.forEach(promise => {
+    //       promise.then((data) => {
+    //         resolve(result)
+    //       }, (error) => {
+    //         reject(error)
+    //       })
+    //     })
+    //   })
+    // }
+
+    // Promise resolve
+    // Promise.myResolve = function (arg) {
+    //   return new Promise((resolve, reject) => {
+    //     resolve(arg)
+    //   })
+    // }
+
+    // // Promise reject
+    // Promise.myReject = function (arg) {
+    //   return new Promise((resolve, reject) => {
+    //     reject(arg)
+    //   })
+    // }
+    // // Promise catch  ???
+    // Promise.prototype.mycatch = function (error) {
+    //   return Promise.reject(error).then(null)
+    // }
+
+    // todo
+    // function typejs(argu) {
+
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>

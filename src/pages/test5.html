@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+
+  </div>
+  <script>
+    // 对象 原型
+    // new ：实现方法：创建了一个新对象，将新对象的原型指向构造函数的prototype属性
+    // 将构造函数this指向新的对象，执行构造方法，返回新的对象
+
+    // 实现new  不确定
+
+    // function newFun(constructorFun){
+    //   var obj = {}
+    //   obj.__proto__=constructorFun.prototype
+    //   constructorFun.call(obj)
+    //   return obj
+    // } 
+
+    // 实现继承
+
+    // function Person(){
+    //   this.name = ''
+    //   this.age = ''
+
+    // }
+    // Person.prototype.getName = function(){
+    //   return this.name
+    // }
+
+    // function Child(){
+    //   Person.call(this)
+    //   this.class='123'
+    // }
+    // Child.prototype = Object.create(Person)
+
+    // setPrototypeof(child.prototype,Person.prototype)
+
+
+    // // 模仿extends
+
+    // function myExtends(superFun){
+
+    // }
+
+    // 继承Date对象
+
+    // 框架
+    // 依赖收集：应用开始运行，首先进行模板解析，在模板解析的过程中，会遇到绑定的数据，从而触发数据的getter
+    // 方法，在getter中对数据做一个依赖的标记，数据通过setter变更时，通过watcher对象来，触发对应
+    // 对应的方法
+
+    // watcher
+
+    // data数据绑定
+
+    // compose 
+
+    // getter     watcher监听
+
+    // seting      watcher中的监听
+
+    // 数据劫持数据拦截、编译、双向绑定、发布订阅、虚拟dom、dom diff、patch
+
+    // Object.defineProperty(obj, a, {
+    //   enumerable: true,
+    //   configurable: true,
+    //   writable: true,
+    //   get: function () {
+    //     return obj.a
+    //   },
+    //   set: function (newValue) {
+    //     obj.a = newValue
+    //   }
+    // })
+
+    function obserable(obj) {
+      Object.keys(obj).forEach((key) => {
+        let value = obj[key]
+        Object.defineProperty(obj, key, {
+          // enumerable: true,
+          // configurable: true,
+          // writable: false,
+          get: function () {
+            console.log(`get value:${key}:${value}`)
+            return value
+          },
+          set: function (newValue) {
+            console.log(`set value:${key}:${value}->${newValue}`)
+            value = newValue
+          }
+        })
+      })
+    }
+
+    var obj = {
+      a: 1,
+      b: 1,
+      array: [{
+        key: 'l',
+        value: "hahahah"
+      }]
+    }
+
+    obserable(obj)
+    // obj.a
+    // obj.array
+    // obj.array[1]
+    // obj.array.push(3)
+    // obj.a = '9'
+    // obj.a
+
+
+
+
+
+  </script>
+</body>
+
+</html>

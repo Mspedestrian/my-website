@@ -266,34 +266,221 @@
     // 如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
 
 
-    var canCompleteCircuit = function (gas, cost) {
-      // let yu = gas.map((item,index)=>item-cost[index])
-      let l = gas.length
-      let yu = 0
-      let i = 0, first = 0
-      let ci = 0
-      while (ci < l && first < l) {
+    // var canCompleteCircuit = function (gas, cost) {
+    //   // let yu = gas.map((item,index)=>item-cost[index])
+    //   let l = gas.length
+    //   let yu = 0
+    //   let i = 0, first = 0
+    //   let ci = 0
+    //   while (ci < l && first < l) {
 
-        if (i === l) {
-          i = 0
-        }
-        yu = yu + (gas[i] - cost[i])
-        if (yu < 0) {
-          first = i + 1;
+    //     if (i === l) {
+    //       i = 0
+    //     }
+    //     yu = yu + (gas[i] - cost[i])
+    //     if (yu < 0) {
+    //       first = i + 1;
 
-        }
-        if (ci === l - 1) {
-          return first
-        }
-        ci++
-        i++
+    //     }
+    //     if (ci === l - 1) {
+    //       return first
+    //     }
+    //     ci++
+    //     i++
+    //   }
+    //   return first + 1
+
+    // };
+
+    // console.log(canCompleteCircuit([1, 2, 3, 4, 5],
+    //   [3, 4, 5, 1, 2]))
+
+    //     给出一个完全二叉树，求出该树的节点个数。
+
+    // 说明：
+
+    // 完全二叉树的定义如下：在完全二叉树中，除了最底层节点可能没填满外，其余每层节点数都达到最大值，并且最下面一层的节点都集中在该层最左边的若干位置。若最底层为第 h 层，则该层包含 1~ 2h 个节点。
+
+
+    // var countNodes = function (root) {
+    //   let ptr = root;
+    //   let n = 1;
+    //   let left = []
+    //   let right = []
+    //   let arr = [root]
+    //   let last = []
+    //   while (true) {
+
+    //     let last = []
+    //     for (let i = 0; i < arr.length; i++) {
+    //       if (arr[i].left && arr[i].right) {
+    //         last.push(arr[i].left)
+    //         last.push(arr[i].right);
+
+    //       } else if (root.left) {
+    //         return n + (i + 1) * 2 - 1
+
+    //       } else {
+    //         return n + (i + 1) * 2 - 2
+    //       }
+
+    //     }
+    //     arr = last
+    //     n = n * 2 + 1
+
+    //   }
+
+    // };
+    // console.log(countNodes({
+    //   val: 1,
+    //   left: {
+    //     val: 2,
+    //     left: {
+    //       val: 4
+    //     },
+    //     right: {
+    //       val: 5
+    //     }
+    //   },
+    //   right: {
+    //     val: 3,
+    //     left: {
+    //       val: 7
+    //     },
+    //     right: {
+    //       val: 8
+    //     }
+    //   }
+    // }))
+    // var fourSumCount = function (A, B, C, D) {
+    //   const l = al = bl = cl = dl = A.length;
+    //   let ss = []
+    //   let result = 0
+    //   let a = 0, b = 0, c = 0, d = 0;
+    //   A.sort((a, b) => a - b)
+    //   B.sort((a, b) => a - b)
+    //   C.sort((a, b) => a - b)
+    //   D.sort((a, b) => a - b)
+    //   let mind = D[0], maxd = D[l - 1], mina = A[0], maxa = A[l - 1], minb = B[0], maxb = B[l - 1], minc = C[0], maxc = C[l - 1]
+    //   minbcd = B[0] + C[0] + D[0]
+    //   maxbcd = B[l - 1] + C[l - 1] + D[l - 1]
+
+    //   mincd = C[0] + D[0], maxcd = C[l - 1] + D[l - 1]
+    //   // while(a<l&&b<l&&c<l&&d<l){
+    //   //     const sa = A[a],sb = B[b],sc = C[c],sd = D[d]
+    //   //     let yu = 0-sa-sb-sc
+    //   //     if(yu<min||yu>max){
+    //   //         break
+    //   //     }
+    //   //     if(sa<minbcd||sa>maxbcd){
+    //   //         break
+    //   //     }
+
+    //   // }
+    //   let arr = []
+    //   // let mind = D[0],maxd = D[l-1],mina = A[0],maxa = A[l-1],minb = B[0],maxb = B[l-1],minc = C[0],maxc = C[l-1]
+    //   for (let a = 0; a < al; a++) {
+    //     let res = A[a]
+    //     if (res + maxbcd < 0) {
+    //       res = res - A[a]
+    //       continue
+    //     }
+    //     if (res + minbcd > 0) {
+    //       return result
+    //     }
+    //     for (let b = 0; b < bl; b++) {
+    //       res = res + B[b]
+    //       if (res + maxcd < 0) {
+    //         res = res - B[b]
+    //         continue
+    //       }
+    //       if (res + mincd > 0) {
+    //         return result
+    //       }
+    //       for (let c = 0; c < cl; c++) {
+    //         res = res + C[c]
+    //         if (res + maxd < 0) {
+    //           res = res - C[c]
+    //           continue
+    //         }
+    //         if (res + mind > 0) {
+    //           return result
+    //         }
+    //         for (let d = 0; d < dl; d++) {
+    //           res = res + D[d]
+    //           if (res === 0) {
+    //             result++
+    //             arr.push([a, b, c, d])
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    //   console.log(arr)
+    //   return result
+
+    // };
+    // console.log(fourSumCount([-1, -1],
+    //   [-1, 1],
+    //   [-1, 1],
+    //   [1, -1]))
+
+
+
+    //     给定一个字符串S，检查是否能重新排布其中的字母，使得两相邻的字符不同。
+
+    // 若可行，输出任意可行的结果。若不可行，返回空字符串。
+    // 字符串不可以通过这样赋值？？
+    var reorganizeString = function (S) {
+      S = S.split('')
+      let map = {}
+      for (let i = 0; i < S.length; i++) {
+        let ss = map[S[i]] || 0
+        map[S[i]] = ss + 1
       }
-      return first + 1
+      let result = []
+      let isFlag = true
+      while (isFlag) {
+        var arr = Object.keys(map)
+        const noZeroArr = arr.filter((code) => map[code] > 0)
+        // console.log(noZeroArr)
+        if (noZeroArr.length === 0) { isFlag = false; break }
+        if (noZeroArr.length === 1) {
+          const code = noZeroArr[0]
+          if (code !== result[0]) {
+            result.unshift(code)
+          }
+          else if (code !== result.slice(-1)[0]) {
+            result.push(code)
+          }
+          else {
+            const codeindex = result.findIndex((item, index) => {
+              return code !== item && code !== result[index + 1]
+            })
+            if (codeindex == -1) {
+              isFlag = false;
+              result = []
+              break
+            }
+            result.splice(codeindex + 1, 0, code)
+          }
+          map[code]--
+          continue
+        }
+        noZeroArr.forEach(code => {
+          if (map[code] > 0) {
+            result.push(code)
+            map[code]--
+          }
+        })
+      }
+
+
+      console.log(result)
+      return result.join('')
 
     };
-
-    console.log(canCompleteCircuit([1, 2, 3, 4, 5],
-      [3, 4, 5, 1, 2]))
+    console.log(reorganizeString("vvlov"))
   </script>
 </body>
 
